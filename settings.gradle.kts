@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "ShopAdmin"
+rootProject.name = "shop-admin-mysql"
 
 include(":app")

@@ -513,9 +513,9 @@ fun ProductFormDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    val price = priceStr.toDoubleOrNull() ?: 0.0
-                    val promoPrice = promoPriceStr.toDoubleOrNull()
-                    val stock = stockStr.toIntOrNull() ?: 0
+                    val price = priceStr.replace(',', '.').trim().toDoubleOrNull() ?: 0.0
+                    val promoPrice = promoPriceStr.replace(',', '.').trim().toDoubleOrNull()
+                    val stock = stockStr.trim().toIntOrNull() ?: 0
                     val catName = categories.find { it.id == selectedCategoryId }?.name ?: "Général"
 
                     val finalProduct = initialProduct?.copy(

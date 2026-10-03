@@ -1,5 +1,5 @@
 {
-  "name": "Shop & MySQL Admin",
+  "name": "shop-admin-mysql",
   "description": "Gestionnaire de boutique en ligne et base MySQL avec catalogue, commandes, clients, console SQL et code source Java / JSF.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

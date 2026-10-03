@@ -40,24 +40,21 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "ecommerce_boutique.db"
                 )
-                .addCallback(AppDatabaseCallback(scope))
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
-                instance
-            }
-        }
-    }
 
-    private class AppDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    InitialData.populateDatabase(database)
+                    try {
+                        if (instance.productDao().getProductCount() == 0) {
+                            InitialData.populateDatabase(instance)
+                        }
+                    } catch (e: Exception) {
+                        // ignore if already populated
+                    }
                 }
+
+                instance
             }
         }
     }

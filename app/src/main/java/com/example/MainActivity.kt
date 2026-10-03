@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.data.database.AppDatabase
 import com.example.data.repository.ShopRepository
@@ -59,6 +60,7 @@ import com.example.ui.screens.ProductFormDialog
 import com.example.ui.screens.ProductsScreen
 import com.example.ui.theme.MyApplicationTheme
 import com.example.viewmodel.ShopViewModel
+import com.example.viewmodel.ShopViewModelFactory
 
 enum class AppDestination(val label: String) {
     DASHBOARD("Accueil"),
@@ -71,15 +73,15 @@ enum class AppDestination(val label: String) {
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var viewModel: ShopViewModel
+    private val viewModel: ShopViewModel by lazy {
+        val database = AppDatabase.getDatabase(this, lifecycleScope)
+        val repository = ShopRepository(database)
+        ViewModelProvider(this, ShopViewModelFactory(repository))[ShopViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        val database = AppDatabase.getDatabase(this, lifecycleScope)
-        val repository = ShopRepository(database)
-        viewModel = ShopViewModel(repository)
 
         setContent {
             MyApplicationTheme {

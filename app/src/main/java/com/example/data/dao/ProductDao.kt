@@ -47,6 +47,9 @@ interface ProductDao {
 
     @Query("SELECT COUNT(*) FROM produits")
     fun countProducts(): Flow<Int>
+
+    @Query("SELECT COUNT(*) FROM produits")
+    suspend fun getProductCount(): Int
 }
 
 @Dao
